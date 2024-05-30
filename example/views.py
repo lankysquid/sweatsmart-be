@@ -3,6 +3,8 @@ from datetime import datetime
 
 from django.http import HttpResponse
 
+import json
+
 def index(request):
     now = datetime.now()
     # html = f'''
@@ -13,8 +15,8 @@ def index(request):
     #     </body>
     # </html>
     # '''
-    json = {
+    json_data = {
         "message": "Hello from Vercel!",
         "time": now
     }
-    return HttpResponse(json.dumps(), content_type='application/json')
+    return HttpResponse(json.dumps(json_data), content_type='application/json')

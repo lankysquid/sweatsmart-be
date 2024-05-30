@@ -17,4 +17,4 @@ def index(request):
         "message": "Hello from Vercel!",
         "time": now
     }
-    return HttpResponse(json, content_type='application/json')
+    return HttpResponse(json.dumps(), content_type='application/json')

@@ -11,4 +11,4 @@ class StravaAuthView(APIView):
     
     def get(self, request, format=None):
         # Your logic here
-        return Response({"message": "Received in get"}, status=200)
+        return Response({"message": request.query_params['poop']}, status=200)

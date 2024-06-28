@@ -27,4 +27,4 @@ class StravaAuthView(APIView):
                    'code': code,
                    'grant_type': 'authorization_code'}
         response = requests.post(strava_auth_url, params=params)
-        return Response({"refresh_token": response.json()}, status=200)
+        return Response(response.json(), status=200)

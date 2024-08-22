@@ -6,11 +6,23 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from dotenv import load_dotenv
 
-
-strava_auth_url = 'https://www.strava.com/api/v3/oauth/token'
-
 load_dotenv()
 
+strava_auth_url = 'https://www.strava.com/api/v3/oauth/token'
+STRAVA_CLIENT_SECRET = os.environ['STRAVA_CLIENT_SECRET']
+STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
+
+def build_code_params(code):
+    return { 'client_id': STRAVA_CLIENT_ID,
+             'client_secret': STRAVA_CLIENT_SECRET,
+             'code': code,
+             'grant_type': 'authorization_code'}
+    
+def build_refresh_params(refresh_token):
+    return { 'client_id': STRAVA_CLIENT_ID,
+             'client_secret': STRAVA_CLIENT_SECRET,
+             'refresh_token': refresh_token,
+             'grant_type': 'refresh_token'}
 class StravaAuthView(APIView):
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
@@ -18,13 +30,13 @@ class StravaAuthView(APIView):
         return Response({"message": "Received"}, status=200)
     
     def get(self, request, format=None):
-        # Your logic here
         code = request.query_params['code']
-        STRAVA_CLIENT_SECRET = os.environ['STRAVA_CLIENT_SECRET']
-        STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
-        params = { 'client_id': STRAVA_CLIENT_ID,
-                   'client_secret': STRAVA_CLIENT_SECRET,
-                   'code': code,
-                   'grant_type': 'authorization_code'}
+        refresh_token = request.query_params.get('refresh_token')
+        if code is not None:
+            params = build_code_params(code)
+        elif refresh_token is not None:
+            params = build_refresh_params(refresh_token)
+        else:
+            return Response({"message": "Invalid request"}, status=400)
         response = requests.post(strava_auth_url, params=params)
         return Response(response.json(), status=200)

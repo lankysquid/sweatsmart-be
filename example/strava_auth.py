@@ -31,7 +31,7 @@ class StravaAuthView(APIView):
     
     def get(self, request, format=None):
         code = request.query_params['code']
-        refresh_token = request.query_params.get('refresh_token')
+        refresh_token = request.query_params['refresh_token']
         if code is not None:
             params = build_code_params(code)
         elif refresh_token is not None:

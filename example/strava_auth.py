@@ -26,17 +26,21 @@ def build_refresh_params(refresh_token):
 class StravaAuthView(APIView):
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
-        # Your logic here
         return Response({"message": "Received"}, status=200)
     
     def get(self, request, format=None):
-        code = request.query_params['code']
-        refresh_token = request.query_params['refresh_token']
-        if code is not None:
+        code = request.query_params.get('code')
+        refresh_token = request.query_params.get('refresh_token')
+        
+        if code:
             params = build_code_params(code)
-        elif refresh_token is not None:
+        elif refresh_token:
             params = build_refresh_params(refresh_token)
         else:
             return Response({"message": "Invalid request"}, status=400)
         response = requests.post(strava_auth_url, params=params)
+        
+        if response.status_code != 200:
+            return Response({"message": "Error from Strava API", "details": response.json()}, status=response.status_code)
+        
         return Response(response.json(), status=200)

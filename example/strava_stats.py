@@ -6,12 +6,26 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from dotenv import load_dotenv
 from services.calculators.running import calculate_average_run_time, calculate_average_run_pace, calculate_suggested_runs
+from services.calculators.cycling import calculate_average_ride_pace, calculate_average_ride_time, calculate_suggested_rides
+from services.calculators.swimming import calculate_average_swim_pace, calculate_average_swim_time, calculate_suggested_swims 
 
 load_dotenv()
 
 strava_url = 'https://www.strava.com/api/v3/'
 STRAVA_CLIENT_SECRET = os.environ['STRAVA_CLIENT_SECRET']
 STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
+
+def get_stats(strava_stats: dict) -> dict:
+    average_ride_pace = calculate_average_ride_pace(strava_stats)
+    average_ride_time = calculate_average_ride_time(strava_stats)
+    suggested_rides = calculate_suggested_rides(average_ride_pace, average_ride_time)
+    average_run_pace = calculate_average_run_pace(strava_stats)
+    average_run_time = calculate_average_run_time(strava_stats)
+    suggested_runs = calculate_suggested_runs(average_run_pace, average_run_time)
+    average_swim_pace = calculate_average_swim_pace(strava_stats)
+    average_swim_time = calculate_average_swim_time(strava_stats)
+    suggested_swims = calculate_suggested_swims(average_swim_pace, average_swim_time)
+    return {"suggested_rides": suggested_rides, "suggested_runs": suggested_runs, "suggested_swims": suggested_swims}
 
 class StravaStatsView(APIView):
     @method_decorator(csrf_exempt)
@@ -28,13 +42,13 @@ class StravaStatsView(APIView):
         print(headers)
         print(url)
         response = requests.get(url, headers=headers)
-        average_run_pace = calculate_average_run_pace(response.json())
-        average_run_time = calculate_average_run_time(response.json())
-        suggested_runs = calculate_suggested_runs(average_run_pace, average_run_time)
-        print(suggested_runs)
-
         print(response)
-        if response.status_code != 200:
+        
+        if response.status_code >= 400:
             return Response({"message": "Error from Strava API", "details": response.json()}, status=response.status_code)
         
-        return Response({"easy_run":suggested_runs[0], "medium_run":suggested_runs[1], "hard_run":suggested_runs[2]}, status=200)
+        suggested_workouts = get_stats(response.json())
+        
+        print('suggested workouts', suggested_workouts)
+        
+        return Response({"suggested_workouts": suggested_workouts}, status=200)

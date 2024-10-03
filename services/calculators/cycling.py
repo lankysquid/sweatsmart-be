@@ -20,22 +20,22 @@ def calculate_average_ride_time(strava_stats: dict) -> float:
     average_time = elapsed_time / count
     return average_time
 
-def calculate_suggested_rides(average_pace: float, average_time: float) -> dict:
+def calculate_rides(average_pace: float, average_time: float) -> dict:
     if average_time == 0:
-        return {}
+        return {"Go for a ride to see suggested workout"}
     easy_pace = average_pace * 1.05
     easy_time = average_time * 0.8
     suggested = True
     easy_title = "Easy Workout"
-    easy_ride = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title} 
+    easy_ride = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy"} 
     medium_pace = average_pace * 0.95
     medium_time = average_time * 0.92
     suggested = False
     medium_title = "Medium Workout"
-    medium_ride = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title} 
+    medium_ride = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium"} 
     hard_pace = average_pace * 0.9
     hard_time = average_time * 1.05
     suggested = False
     hard_title = "Hard Workout"
-    hard_ride = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title} 
-    return {"easy_ride": easy_ride, "medium_ride": medium_ride, "hard_ride": hard_ride}
+    hard_ride = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard"} 
+    return [easy_ride, medium_ride, hard_ride]

@@ -32,15 +32,15 @@ def calculate_runs(average_pace: float, average_time: float) -> dict:
     easy_time = average_time * 0.8
     suggested = True
     easy_title = "Easy Workout"
-    easy_run = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy"} 
+    easy_run = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy", "pace_unit": "mins/mi"} 
     medium_pace = average_pace_readable(average_pace * 0.95)
     medium_time = average_time * 0.92
     suggested = False
     medium_title = "Medium Workout"
-    medium_run = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium"} 
+    medium_run = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium", "pace_unit": "mins/mi"} 
     hard_pace = average_pace_readable(average_pace * 0.9)
     hard_time = average_time * 1.05
     suggested = False
     hard_title = "Hard Workout"
-    hard_run = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard"} 
+    hard_run = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard", "pace_unit": "mins/mi"} 
     return [easy_run, medium_run, hard_run]

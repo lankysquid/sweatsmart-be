@@ -9,6 +9,11 @@ def calculate_average_run_pace(strava_stats: dict) -> float:
     average_pace = elapsed_time / (distance / 1609.344)
     return average_pace
 
+def average_pace_readable(pace):
+    minutes = round(pace // 60)
+    seconds = round(pace % 60)
+    return f"{minutes}:{str(seconds).zfill(2)}"
+
 
 def calculate_average_run_time(strava_stats: dict) -> float:
     """Calculates average workout time based on recent run totals."""
@@ -23,17 +28,17 @@ def calculate_average_run_time(strava_stats: dict) -> float:
 def calculate_runs(average_pace: float, average_time: float) -> dict:
     if average_time == 0:
         return {"To See Data, Record a Run in Strava"}
-    easy_pace = average_pace * 1.05
+    easy_pace = average_pace_readable(average_pace * 1.05)
     easy_time = average_time * 0.8
     suggested = True
     easy_title = "Easy Workout"
     easy_run = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy"} 
-    medium_pace = average_pace * 0.95
+    medium_pace = average_pace_readable(average_pace * 0.95)
     medium_time = average_time * 0.92
     suggested = False
     medium_title = "Medium Workout"
     medium_run = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium"} 
-    hard_pace = average_pace * 0.9
+    hard_pace = average_pace_readable(average_pace * 0.9)
     hard_time = average_time * 1.05
     suggested = False
     hard_title = "Hard Workout"

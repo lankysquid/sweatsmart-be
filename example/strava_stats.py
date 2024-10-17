@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from dotenv import load_dotenv
 from services.calculators.running import calculate_average_run_time, calculate_average_run_pace, calculate_runs
-from services.calculators.cycling import calculate_average_ride_pace, calculate_average_ride_time, calculate_rides
+from services.calculators.cycling import calculate_average_ride_speed, calculate_average_ride_time, calculate_rides
 from services.calculators.swimming import calculate_average_swim_pace, calculate_average_swim_time, calculate_swims 
 
 load_dotenv()
@@ -16,7 +16,7 @@ STRAVA_CLIENT_SECRET = os.environ['STRAVA_CLIENT_SECRET']
 STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
 
 def get_stats(strava_stats: dict) -> dict:
-    average_ride_pace = calculate_average_ride_pace(strava_stats)
+    average_ride_pace = calculate_average_ride_speed(strava_stats)
     average_ride_time = calculate_average_ride_time(strava_stats)
     rides = calculate_rides(average_ride_pace, average_ride_time)
     average_run_pace = calculate_average_run_pace(strava_stats)

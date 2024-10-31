@@ -1,3 +1,5 @@
+from services.gpt.chatbot import gpt_workout_details 
+
 def calculate_average_run_pace(strava_stats: dict) -> float:
     """Calculates average pace based on recent run totals."""
     elapsed_time = strava_stats["recent_run_totals"]["elapsed_time"]
@@ -31,16 +33,19 @@ def calculate_runs(average_pace: float, average_time: float) -> dict:
     easy_pace = average_pace_readable(average_pace * 1.05)
     easy_time = average_time * 0.8
     suggested = True
-    easy_title = "Easy Workout"
-    easy_run = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy", "pace_unit": "mins/mi"} 
+    easy_workout_plan = gpt_workout_details("Easy")
+    easy_title = easy_workout_plan.title
+    easy_run = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy", "pace_unit": "mins/mi", "workout_plan": easy_workout_plan.plan} 
     medium_pace = average_pace_readable(average_pace * 0.95)
     medium_time = average_time * 0.92
     suggested = False
-    medium_title = "Medium Workout"
-    medium_run = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium", "pace_unit": "mins/mi"} 
+    medium_workout_plan = gpt_workout_details("Medium")
+    medium_title = medium_workout_plan.title
+    medium_run = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium", "pace_unit": "mins/mi", "workout_plan": medium_workout_plan.plan} 
     hard_pace = average_pace_readable(average_pace * 0.9)
     hard_time = average_time * 1.05
     suggested = False
-    hard_title = "Hard Workout"
-    hard_run = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard", "pace_unit": "mins/mi"} 
+    hard_workout_plan = gpt_workout_details("Difficult")
+    hard_title = hard_workout_plan.title
+    hard_run = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard", "pace_unit": "mins/mi", "workout_plan": hard_workout_plan.plan} 
     return [easy_run, medium_run, hard_run]

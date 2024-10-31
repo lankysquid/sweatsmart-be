@@ -1,4 +1,4 @@
-from services.gpt.chatbot import gpt_workout_details 
+from services.gpt.chatbot import gpt_workout_details
 
 def calculate_average_run_pace(strava_stats: dict) -> float:
     """Calculates average pace based on recent run totals."""

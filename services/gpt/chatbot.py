@@ -29,7 +29,7 @@ def gpt_workout_details(difficulty, sport) -> Workout:
         },
         {
             "role": "user",
-            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts 45 minutes, in non-json, sentence format.",
+            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts 45 minutes, in non-json, using twelve words or less.",
         }
     ],
     model="llama3-8b-8192",

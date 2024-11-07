@@ -14,8 +14,8 @@ class Workout(BaseModel):
     plan: str
     
 
-def gpt_workout_details(request) -> Workout:
-    user_input = request
+def gpt_workout_details(difficulty, sport) -> Workout:
+    user_input = difficulty
 
     if not user_input:
         return {"error": "No message provided"}
@@ -29,7 +29,7 @@ def gpt_workout_details(request) -> Workout:
         },
         {
             "role": "user",
-            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout', create a {request} running workout that lasts 45 minutes.",
+            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout', create a {difficulty} {sport} workout that lasts 45 minutes.",
         }
     ],
     model="llama3-8b-8192",

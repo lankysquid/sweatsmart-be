@@ -18,7 +18,6 @@ STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
 
 def get_stats(strava_stats: dict) -> dict:
     print("=====================fart=====================")
-    workout_plan = gpt_workout_details("")
     average_ride_pace = calculate_average_ride_speed(strava_stats)
     average_ride_time = calculate_average_ride_time(strava_stats)
     rides = calculate_rides(average_ride_pace, average_ride_time)

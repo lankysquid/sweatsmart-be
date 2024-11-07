@@ -29,19 +29,19 @@ def calculate_rides(average_speed: float, average_time: float) -> dict:
     easy_pace = round(average_speed * 0.9)
     easy_time = average_time * 0.8
     suggested = True
-    easy_workout_plan = gpt_workout_details("Easy")
+    easy_workout_plan = gpt_workout_details("Easy", "cycling")
     easy_title = easy_workout_plan.title
     easy_ride = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy", "pace_unit": "mph", "workout_plan": easy_workout_plan.plan} 
     medium_pace = round(average_speed * 0.95)
     medium_time = average_time * 0.92
     suggested = False
-    medium_workout_plan = gpt_workout_details("Medium")
+    medium_workout_plan = gpt_workout_details("Medium", "cycling")
     medium_title = medium_workout_plan.title
     medium_ride = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium", "pace_unit": "mph", "workout_plan": medium_workout_plan.plan} 
     hard_pace = round(average_speed * 1.1)
     hard_time = average_time * 1.05
     suggested = False
-    hard_workout_plan = gpt_workout_details("Hard")
+    hard_workout_plan = gpt_workout_details("Hard", "cycling")
     hard_title = hard_workout_plan.title
     hard_ride = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard", "pace_unit": "mph", "workout_plan": hard_workout_plan.plan} 
     return [easy_ride, medium_ride, hard_ride]

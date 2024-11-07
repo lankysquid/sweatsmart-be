@@ -25,11 +25,11 @@ def gpt_workout_details(difficulty, sport) -> Workout:
         {
             "role": "system",
             "content": "you are a coach specializing in endurance athletics for running, cycling, and swimming.\n"
-            f"The JSON object must use the schema: {json.dumps(Workout.model_json_schema(), indent=2)}"
+            f"The JSON object must use the exact schema: {json.dumps(Workout.model_json_schema(), indent=2)}"
         },
         {
             "role": "user",
-            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout', create a {difficulty} {sport} workout that lasts 45 minutes.",
+            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts 45 minutes, in non-json, sentence format.",
         }
     ],
     model="llama3-8b-8192",

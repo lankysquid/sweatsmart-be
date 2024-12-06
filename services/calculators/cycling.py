@@ -45,3 +45,5 @@ def calculate_rides(average_speed: float, average_time: float) -> dict:
     hard_title = hard_workout_plan.title
     hard_ride = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard", "pace_unit": "mph", "workout_plan": hard_workout_plan.plan} 
     return [easy_ride, medium_ride, hard_ride]
+
+# def calculate_suggested_workout()

@@ -20,19 +20,22 @@ def calculate_average_swim_time(strava_stats: dict) -> float:
     average_time = elapsed_time / count
     return average_time
 
-def calculate_swims(average_pace: float, average_time: float, suggested: str) -> dict:
+def calculate_swims(average_pace: float, average_time: float) -> dict:
     if average_time == 0:
         return {"Go for a swim to see data"}
     easy_pace = average_pace * 1.05
     easy_time = average_time * 0.8
+    suggested = True
     easy_title = "Easy Workout"
-    easy_swim = {"pace": easy_pace, "time": easy_time, "suggested": suggested == "EASY", "title": easy_title, "difficulty": "easy"} 
+    easy_swim = {"pace": easy_pace, "time": easy_time, "suggested": suggested, "title": easy_title, "difficulty": "easy"} 
     medium_pace = average_pace * 0.95
     medium_time = average_time * 0.92
+    suggested = False
     medium_title = "Medium Workout"
-    medium_swim = {"pace": medium_pace, "time": medium_time, "suggested": suggested == "MEDIUM", "title": medium_title, "difficulty": "medium"} 
+    medium_swim = {"pace": medium_pace, "time": medium_time, "suggested": suggested, "title": medium_title, "difficulty": "medium"} 
     hard_pace = average_pace * 0.9
     hard_time = average_time * 1.05
+    suggested = False
     hard_title = "Hard Workout"
-    hard_swim = {"pace": hard_pace, "time": hard_time, "suggested": suggested == "HARD", "title": hard_title, "difficulty": "hard"} 
+    hard_swim = {"pace": hard_pace, "time": hard_time, "suggested": suggested, "title": hard_title, "difficulty": "hard"} 
     return [easy_swim, medium_swim, hard_swim]

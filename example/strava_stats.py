@@ -26,26 +26,16 @@ def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
         if activity.get('kilojoules'):
             pprint(activity["kilojoules"], indent=4)
             kilojoules_array.append(activity["kilojoules"])
-    average_kjs = (sum(kilojoules_array) / len(kilojoules_array))
-    recent_kjs = kilojoules_array[0]
-    print(recent_kjs)
-    print(average_kjs)
-    suggested = ''
-    if average_kjs > recent_kjs:
-        suggested = 'HARD'
-    elif average_kjs == recent_kjs:
-        suggested = 'MEDIUM'
-    elif average_kjs < recent_kjs:
-        suggested = 'EASY'
+    print(sum(kilojoules_array) / len(kilojoules_array))
     average_ride_pace = calculate_average_ride_speed(strava_stats)
     average_ride_time = calculate_average_ride_time(strava_stats)
-    rides = calculate_rides(average_ride_pace, average_ride_time, suggested)
+    rides = calculate_rides(average_ride_pace, average_ride_time)
     average_run_pace = calculate_average_run_pace(strava_stats)
     average_run_time = calculate_average_run_time(strava_stats)
-    runs = calculate_runs(average_run_pace, average_run_time, suggested)
+    runs = calculate_runs(average_run_pace, average_run_time)
     average_swim_pace = calculate_average_swim_pace(strava_stats)
     average_swim_time = calculate_average_swim_time(strava_stats)
-    swims = calculate_swims(average_swim_pace, average_swim_time, suggested)
+    swims = calculate_swims(average_swim_pace, average_swim_time)
     return {"rides": rides, "runs": runs, "swims": swims}
 
 class StravaStatsView(APIView):
@@ -74,6 +64,6 @@ class StravaStatsView(APIView):
         
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
-        pprint(f'workouts {workouts}', indent=2)
+        print('workouts', workouts)
         
         return Response({"workouts": workouts}, status=200)

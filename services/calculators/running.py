@@ -30,7 +30,7 @@ def calculate_average_run_time(strava_stats: dict) -> float:
 def calculate_runs(average_pace: float, average_time: float) -> dict:
     if average_time == 0:
         return {"To See Data, Record a Run in Strava"}
-    easy_pace = average_pace_readable(average_pace * 1.05)
+    easy_pace = average_pace_readable(average_pace * .95)
     easy_time = average_time * 0.8
     suggested = True
     easy_workout_plan = gpt_workout_details("Easy", "running")

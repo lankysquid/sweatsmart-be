@@ -5,7 +5,6 @@
       "dest": "api/wsgi.py"
     }
   ],
-  "config": {
-    "runtime": "python3.9"
-  }
+   "runtime": "python3.9"
+
 }

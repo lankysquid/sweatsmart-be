@@ -74,6 +74,6 @@ class StravaStatsView(APIView):
         
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
-        pprint(f'workouts {workouts}', indent=2)
+        # pprint(f'workouts {workouts}', indent=2)
         
         return Response({"workouts": workouts}, status=200)

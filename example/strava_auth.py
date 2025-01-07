@@ -34,17 +34,13 @@ class StravaAuthView(APIView):
         
         if code:
             params = build_code_params(code)
-            print("sending code params", params)
         elif refresh_token:
             params = build_refresh_params(refresh_token)
-            print("sending refresh token", params)
         else:
             return Response({"message": "Invalid request"}, status=400)
         response = requests.post(strava_auth_url, params=params)
-        print(response.json())
         
         if response.status_code != 200:
             return Response({"message": "Error from Strava API", "details": response.json()}, status=response.status_code)
-            
         
         return Response(response.json(), status=200)

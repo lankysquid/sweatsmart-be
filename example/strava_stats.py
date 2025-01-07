@@ -1,6 +1,6 @@
 import os
 import requests
-from pprint import pprint
+# from pprint import pprint
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
@@ -24,7 +24,7 @@ def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
     kilojoules_array = [] 
     for activity in strava_activities[:10]:
         if activity.get('kilojoules'):
-            pprint(activity["kilojoules"], indent=4)
+            # pprint(activity["kilojoules"], indent=4)
             kilojoules_array.append(activity["kilojoules"])
     print(sum(kilojoules_array) / len(kilojoules_array))
     average_ride_pace = calculate_average_ride_speed(strava_stats)

@@ -28,8 +28,7 @@ def gpt_workout_details(difficulty, sport) -> Workout:
         return {"error": "No message provided"}
     
     if not client:
-        return Workout.model_validate_json{"title": "Groq title", "plan": "Groq plan" }
-
+        return Workout.model_validate_json({"title": "Groq title", "plan": "Groq plan" })
     chat_completion = client.chat.completions.create(
     messages=[
         {

@@ -21,7 +21,7 @@ def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
     print("=====================fart=====================")
     print(strava_activities)
     print(len(strava_activities))
-    print(strava_activities[0]["kilojoules"])
+    # print(strava_activities[0]["kilojoules"])
     kilojoules_array = [] 
     for activity in strava_activities[:10]:
         if activity.get('kilojoules'):

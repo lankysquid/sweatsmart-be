@@ -19,8 +19,9 @@ STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
 
 def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
     print("=====================fart=====================")
-    print(strava_activities[0]["kilojoules"])
+    print(strava_activities)
     print(len(strava_activities))
+    print(strava_activities[0]["kilojoules"])
     kilojoules_array = [] 
     for activity in strava_activities[:10]:
         if activity.get('kilojoules'):
@@ -72,7 +73,8 @@ class StravaStatsView(APIView):
         
         if strava_stats.status_code >= 400:
             return Response({"message": "Error from Strava API", "details": strava_stats.json()}, status=strava_stats.status_code)
-        
+        print("activities from GET strava_stats")
+        print(strava_activities)
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
         # pprint(f'workouts {workouts}', indent=2)

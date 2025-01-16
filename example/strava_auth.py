@@ -29,6 +29,8 @@ class StravaAuthView(APIView):
         return Response({"message": "Received"}, status=200)
     
     def get(self, request, format=None):
+        print ("In strava_auth")
+        print(f"request: {request}")
         code = request.query_params.get('code')
         refresh_token = request.query_params.get('refresh_token')
         

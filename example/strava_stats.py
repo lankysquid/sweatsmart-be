@@ -54,6 +54,7 @@ class StravaStatsView(APIView):
         return Response({"message": "Received"}, status=200)
     
     def get(self, request, format=None):
+        print(f"in strava_stats {request}")
         athlete_id = request.query_params.get('athlete_id')
         access_token = request.query_params.get('access_token')
         stats_url = strava_url + f'athletes/{athlete_id}/stats'

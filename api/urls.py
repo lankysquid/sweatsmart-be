@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.urls import path, include
 
-print("urls")
 urlpatterns = [
     path('', include('example.urls')),
 ]

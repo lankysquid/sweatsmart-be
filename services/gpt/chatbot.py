@@ -5,9 +5,16 @@ from groq import Groq
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Best practice to load from environment variables
 
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-)
+try:
+    client = Groq(
+        api_key=os.environ.get("GROQ_API_KEY"),
+    )
+except TypeError as e:
+    print(f"Failed to initialize Groq client: {e}")
+    client = None
+except Exception as e:
+    print(f"Unexpected error initializing Groq client: {e}")
+    client = None
 
 class Workout(BaseModel):
     title: str
@@ -19,6 +26,9 @@ def gpt_workout_details(difficulty, sport) -> Workout:
 
     if not user_input:
         return {"error": "No message provided"}
+    
+    if not client:
+        return "Groq Error"
 
     chat_completion = client.chat.completions.create(
     messages=[

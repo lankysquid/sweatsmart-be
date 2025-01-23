@@ -3,7 +3,10 @@ import json
 from pydantic import BaseModel
 from groq import Groq
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Best practice to load from environment variables
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
+
+print(GROQ_API_KEY)
+print(os.environ['GROQ_API_KEY'])
 
 try:
     client = Groq(
@@ -28,7 +31,9 @@ def gpt_workout_details(difficulty, sport) -> Workout:
         return {"error": "No message provided"}
     
     if not client:
-        return Workout.model_validate_json({"title": "Groq title", "plan": "Groq plan" })
+        workout_error = Workout(title="Error", plan="We're experiencing technical difficulties, please check back in a bit.")
+        return workout_error
+    
     chat_completion = client.chat.completions.create(
     messages=[
         {

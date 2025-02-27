@@ -24,7 +24,7 @@ class Workout(BaseModel):
     plan: str
     
 
-def gpt_workout_details(difficulty, sport) -> Workout:
+def gpt_workout_details(difficulty, sport, time, pace, pace_unit) -> Workout:
     user_input = difficulty
 
     if not user_input:
@@ -43,7 +43,7 @@ def gpt_workout_details(difficulty, sport) -> Workout:
         },
         {
             "role": "user",
-            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts 45 minutes, in non-json, using twelve words or less.",
+            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts {time / 60} minutes with an average page of {pace} {pace_unit}, in non-json, using between fifteen and twenty words.",
         }
     ],
     model="llama3-8b-8192",

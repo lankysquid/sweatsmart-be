@@ -3,10 +3,9 @@ from services.gpt.chatbot import gpt_workout_details
 def calculate_average_ride_speed(strava_stats: dict) -> float:
     """Calculates average speed based on recent run totals."""
     elapsed_time = strava_stats["recent_ride_totals"]["elapsed_time"]
-    if elapsed_time == 0:
-        return 0
     distance = strava_stats["recent_ride_totals"]["distance"]
-
+    if elapsed_time == 0 or distance == 0:
+        return 0
     # 1609.344 is used to convert meters to miles (for speed calculation)
     average_pace = elapsed_time / (distance / 1609.344)
     average_speed = 60 / (average_pace / 60)

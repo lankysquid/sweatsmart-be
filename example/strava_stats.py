@@ -18,9 +18,6 @@ STRAVA_CLIENT_SECRET = os.environ['STRAVA_CLIENT_SECRET']
 STRAVA_CLIENT_ID = os.environ['STRAVA_CLIENT_ID']
 
 def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
-    print("=====================fart=====================")
-    print(strava_activities)
-    print(len(strava_activities))
     # print(strava_activities[0]["kilojoules"])
     kilojoules_array = [] 
     for activity in strava_activities[:10]:
@@ -29,8 +26,6 @@ def get_stats(strava_stats: dict, strava_activities: dict) -> dict:
             kilojoules_array.append(activity["kilojoules"])
     average_kjs = (sum(kilojoules_array) / len(kilojoules_array))
     recent_kjs = kilojoules_array[0]
-    print(recent_kjs)
-    print(average_kjs)
     suggested = ''
     if average_kjs > recent_kjs:
         suggested = 'HARD'
@@ -63,9 +58,6 @@ class StravaStatsView(APIView):
         headers = {
             'Authorization': f'Bearer {access_token}'
         }
-        print(headers)
-        print(stats_url)
-        print(activities_url)
         strava_stats = requests.get(stats_url, headers=headers)
         strava_activities = requests.get(activities_url, headers=headers)
         # print(strava_stats)
@@ -74,7 +66,6 @@ class StravaStatsView(APIView):
         if strava_stats.status_code >= 400:
             return Response({"message": "Error from Strava API", "details": strava_stats.json()}, status=strava_stats.status_code)
         print("activities from GET strava_stats")
-        print(strava_activities)
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
         # pprint(f'workouts {workouts}', indent=2)

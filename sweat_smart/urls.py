@@ -1,10 +1,10 @@
-# example/urls.py
+# sweat_smart/urls.py
 from django.urls import path
 
-from example.views import index
+from sweat_smart.views import index
 
-from example.strava_auth import StravaAuthView
-from example.strava_stats import StravaStatsView
+from sweat_smart.strava_auth import StravaAuthView
+from sweat_smart.strava_stats import StravaStatsView
 
 urlpatterns = [
     path('', index),

@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'example',
-    'athletes'
+    'sweat_smart',
+    'sweat_smart.athletes'
 ]
 
 MIDDLEWARE = [

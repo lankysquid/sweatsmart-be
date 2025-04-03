@@ -2,7 +2,7 @@
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
+sweat_smarts:
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
@@ -16,5 +16,5 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('example.urls')),
+    path('', include('sweat_smart.urls')),
 ]

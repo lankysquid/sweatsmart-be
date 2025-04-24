@@ -5,9 +5,6 @@ from groq import Groq
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
 
-print(GROQ_API_KEY)
-print(os.environ['GROQ_API_KEY'])
-
 try:
     client = Groq(
         api_key=os.environ.get("GROQ_API_KEY"),

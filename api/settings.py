@@ -92,8 +92,8 @@ WSGI_APPLICATION = 'api.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sweatsmart-db',
-        'USER': 'greg',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('HOST'),
         'PORT': '5432',

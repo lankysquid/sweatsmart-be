@@ -30,8 +30,8 @@ def create(data, athlete_tokens):
             'first_name': data.get('firstname', ''),
             'last_name': data.get('lastname', ''),
             'profile_picture': data.get('profile_medium', ''),
-            'access_token': athlete_tokens['access_token'],
-            'refresh_token': athlete_tokens['refresh_token'],
+            'strava_access_token': athlete_tokens['access_token'],
+            'strava_refresh_token': athlete_tokens['refresh_token'],
             'strava_token_expires_at': expires_at,
         }
     )

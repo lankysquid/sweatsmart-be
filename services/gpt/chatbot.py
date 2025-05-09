@@ -2,8 +2,12 @@ import os
 import json
 from pydantic import BaseModel
 from groq import Groq
+from services.cache import ttl_cache
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
+
+print(GROQ_API_KEY)
+print(os.environ['GROQ_API_KEY'])
 
 try:
     client = Groq(
@@ -20,7 +24,7 @@ class Workout(BaseModel):
     title: str
     plan: str
     
-
+@ttl_cache(ttl_seconds=86400)
 def gpt_workout_details(difficulty, sport, time, pace, pace_unit) -> Workout:
     user_input = difficulty
 

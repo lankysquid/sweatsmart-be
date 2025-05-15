@@ -10,6 +10,7 @@ from services.calculators.running import calculate_average_run_time, calculate_a
 from services.calculators.cycling import calculate_average_ride_speed, calculate_average_ride_time, calculate_rides
 from services.calculators.swimming import calculate_average_swim_pace, calculate_average_swim_time, calculate_swims
 from services.gpt.chatbot import gpt_workout_details 
+from pprint import pprint
 
 load_dotenv()
 
@@ -66,8 +67,11 @@ class StravaStatsView(APIView):
         if strava_stats.status_code >= 400:
             return Response({"message": "Error from Strava API", "details": strava_stats.json()}, status=strava_stats.status_code)
         print("activities from GET strava_stats")
+        print("~~~~~~~~~~~~~~THESE ARE THE STRAVA ACTIVTIES~~~~~~~~~~~~~~~~~~~~")
+        activties_list = strava_activities.json()  # Parse the response
+        recent_workout_type = (activties_list[0]["type"])  
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
         # pprint(f'workouts {workouts}', indent=2)
         
-        return Response({"workouts": workouts}, status=200)
+        return Response({"workouts": workouts, "recent_workout_type": recent_workout_type}, status=200)

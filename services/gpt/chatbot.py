@@ -6,8 +6,6 @@ from services.cache import ttl_cache
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
 
-print(GROQ_API_KEY)
-print(os.environ['GROQ_API_KEY'])
 
 try:
     client = Groq(

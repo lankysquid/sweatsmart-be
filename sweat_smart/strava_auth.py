@@ -1,5 +1,6 @@
 import os
 import requests
+import logging
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
@@ -9,6 +10,8 @@ from sweat_smart.athletes.views import get_strava_athlete, create
 
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 strava_auth_url = 'https://www.strava.com/api/v3/oauth/token'
 strava_url = 'https://www.strava.com/api/v3/'
@@ -32,21 +35,21 @@ class StravaAuthView(APIView):
         return Response({"message": "Received"}, status=200)
     
     def get(self, request, format=None):
-        print ("In strava_auth")
-        print(f"request: {request}")
+        logger.info("In strava_auth")
+        logger.info(f"request: {request}")
         code = request.query_params.get('code')
         refresh_token = request.query_params.get('refresh_token')
         
         if code:
             params = build_code_params(code)
-            print("sending code params", params)
+            logger.info(f"sending code params {params}")
         elif refresh_token:
             params = build_refresh_params(refresh_token)
-            print("sending refresh token", params)
+            logger.info(f"sending refresh token {params}")
         else:
             return Response({"message": "Invalid request"}, status=400)
         response = requests.post(strava_auth_url, params=params)
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~FART~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~FART~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
         athlete_tokens = response.json()

@@ -1,21 +1,23 @@
 import os
 import json
+import logging
 from pydantic import BaseModel
 from groq import Groq
 from services.cache import ttl_cache
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
+logger = logging.getLogger(__name__)
 
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")  #Best practice to load from environment variables
 
 try:
     client = Groq(
         api_key=os.environ.get("GROQ_API_KEY"),
     )
 except TypeError as e:
-    print(f"Failed to initialize Groq client: {e}")
+    logger.warning(f"Failed to initialize Groq client: {e}") 
     client = None
 except Exception as e:
-    print(f"Unexpected error initializing Groq client: {e}")
+    logger.warning(f"Unexpected error initializing Groq client: {e}") 
     client = None
 
 class Workout(BaseModel):
@@ -52,7 +54,7 @@ def gpt_workout_details(difficulty, sport, time, pace, pace_unit) -> Workout:
 )
 
     workout_plan = chat_completion.choices[0].message.content
-    print(workout_plan)
+    logger.info(f"{workout_plan=}") # Changed from print
     return Workout.model_validate_json(workout_plan)
 
 

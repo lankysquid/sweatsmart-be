@@ -1,9 +1,12 @@
 import requests
+import logging
 from django.contrib.auth import get_user_model, login
 from django.utils import timezone
 from datetime import datetime
 
 Athlete = get_user_model()
+
+logger = logging.getLogger(__name__) # Add logger instance
 
 strava_url = 'https://www.strava.com/api/v3/'
 
@@ -12,11 +15,11 @@ def get_strava_athlete(access_token):
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-    print(headers)
-    print(athlete_url)
+    logger.info(f"{headers=}") 
+    logger.info(f"{athlete_url=}")
     response = requests.get(athlete_url, headers=headers)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~FART~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print(response.json())
+    logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~FART~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~") # Changed from print
+    logger.info(f"{response.json()=}")
     response = response.json()
     return response
   

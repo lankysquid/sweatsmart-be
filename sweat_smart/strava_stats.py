@@ -68,8 +68,8 @@ class StravaStatsView(APIView):
         if strava_stats.status_code >= 400:
             return Response({"message": "Error from Strava API", "details": strava_stats.json()}, status=strava_stats.status_code)
         logger.info("activities from GET strava_stats")
-        activties_list = strava_activities.json() 
-        recent_workout_type = (activties_list[0]["type"])  
+        activities_list = strava_activities.json() 
+        recent_workout_type = (activities_list[0]["type"])  
         workouts = get_stats(strava_stats.json(), strava_activities.json())
         
         # logger.info(f'{workouts=}')

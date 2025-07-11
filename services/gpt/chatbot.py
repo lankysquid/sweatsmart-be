@@ -44,10 +44,10 @@ def gpt_workout_details(difficulty, sport, time, pace, pace_unit) -> Workout:
         },
         {
             "role": "user",
-            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts {round(time / 60)} minutes with an average page of {pace} {pace_unit}, in non-json, using between fifteen and twenty words.",
+            "content": f"Using ten words or less plus a title such as 'Tempo Run' or 'Interval Workout'. Create a {difficulty} {sport} workout plan that lasts {round(time / 60)} minutes with an average page of {pace} {pace_unit}, in non-json, using between fifteen and twenty words. Consistently use a colon near the beginning of each workout suggestion",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama-3.1-8b-instant",
     temperature=0.4,
     max_tokens=1024,
     response_format={"type": "json_object"}

@@ -17,7 +17,7 @@ class StravaStatsView(APIView):
     View for handling Strava statistics and workout recommendations.
     Business logic is delegated to the service layer and model methods.
     """
-    permission_classes = [AllowAny]  # Explicitly set for public endpoint
+    permission_classes = [IsAuthenticated]  # Enforce authentication for secure access
     
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):

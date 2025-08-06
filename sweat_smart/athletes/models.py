@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-import os
 import requests
 import logging
 from services.calculators.running import calculate_average_run_time, calculate_average_run_pace, calculate_runs

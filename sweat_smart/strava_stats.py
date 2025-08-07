@@ -3,8 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+
 from services.strava_stats_service import StravaStatsService
 from rest_framework.exceptions import ValidationError, PermissionDenied
 from sweat_smart.serializers import StravaStatsRequestSerializer
@@ -28,8 +27,6 @@ class StravaStatsView(APIView):
     throttle_classes = [UserRateThrottle]
     throttle_scope = "strava_stats"
     
-    # remove @csrf_exempt from your POST if you still need CSRF protectio
-    @method_decorator(csrf_exempt)
     def post(self, request, format=None):
         """Handle POST requests - placeholder for future functionality."""
         return Response({"message": "Received"}, status=status.HTTP_200_OK)

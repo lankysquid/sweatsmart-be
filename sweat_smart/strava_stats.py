@@ -1,32 +1,24 @@
 import logging
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework import status
-
-from services.strava_stats_service import StravaStatsService
-from rest_framework.exceptions import ValidationError, PermissionDenied
-from sweat_smart.serializers import StravaStatsRequestSerializer
 import requests
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.throttling import UserRateThrottle
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.exceptions import ValidationError, PermissionDenied
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from services.strava_stats_service import StravaStatsService
+from sweat_smart.serializers import StravaStatsRequestSerializer
 
 logger = logging.getLogger(__name__)
-
 class StravaStatsView(APIView):
     """
     View for handling Strava statistics and workout recommendations.
     Business logic is delegated to the service layer and model methods.
     """
-    # Only allow logged‐in users with a valid token/session
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    # Optional: rate‐limit to e.g. 100 requests per user per hour
-    throttle_classes = [UserRateThrottle]
-    throttle_scope = "strava_stats"
+    permission_classes = [AllowAny]  # Allow any user for now, can be changed to IsAuthenticated later
     
+    @method_decorator(csrf_exempt)
     def post(self, request, format=None):
         """Handle POST requests - placeholder for future functionality."""
         return Response({"message": "Received"}, status=status.HTTP_200_OK)
